@@ -1,7 +1,7 @@
 sudo setenforce 0
 sudo echo -e "\nmax_parallel_downloads=10\nfastestmirror=true" | sudo tee -a /etc/dnf/dnf.conf > /dev/null
 sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-sudo dnf install -y --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' --setopt='terra.gpgkey=https://repos.fyralabs.com/terra41/key.asc' terra-release
+# sudo dnf install -y --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' --setopt='terra.gpgkey=https://repos.fyralabs.com/terra41/key.asc' terra-release
 # OPTIONAL
 # ---
 sudo dnf install -y flatpak
@@ -27,28 +27,27 @@ gnome-extensions-app gcc make cmake python3-devel nodejs docker-compose tracerou
 bottom eza bat ripgrep zoxide onefetch qbittorrent discord sqlite timeshift httpie gping \
 audacious smplayer audacity blender gimp inkscape kdenlive krita vokoscreenNG thunderbird \
 VirtualBox cabextract lzip p7zip p7zip-plugins unrar fontconfig uget nautilus-dropbox \
-lpf-spotify-client zlib-ng-compat.i686 ncurses-libs.i686 bzip2-libs.i686 alacritty zellij \
+zlib-ng-compat.i686 ncurses-libs.i686 bzip2-libs.i686 alacritty zellij \
 tmux zsh procs rustup poetry uv pnpm rust golang tokei bandwhich kubernetes-client fd-find \
-git-delta brave-browser dnfdragora vagrant nerd-fonts cargp
-#CARGO CONFIG
-# TODO: ADD .zshrc -> export PATH="$HOME/.cargo/bin:$PATH"
-# Install fonts
+git-delta brave-browser dnfdragora vagrant nerd-fonts cargp npm yarnpkg
 
 
 flatpak install flathub com.stremio.Stremio -y
+flatpak install spotify -y
 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 
-# PRECISA DE CONFIGURAÇÃO MANUAL e setar python3 como padrão
 curl -fsSL https://pyenv.run | bash
-# TODO: SETUP PYENV
 curl https://get.volta.sh | bash
-curl -sSL https://get.rvm.io | bash -s stable
-# TODO: #CONFIGURAR O RVM
-# curl -fsSL https://get.pnpm.io/install.sh | sh -
-# curl https://sh.rustup.rs -sSf | sh
 
 npm install -g corepack
 npm install -g bun
 
 cargo install bore-cli grex kmon mprocs volta
+
+# ~/.profile	Login shell (zsh, bash, etc.)	⚠️ Ideal para configs comuns a todos os shells
+
+# DOCKER CONFIG
+sudo usermod -aG docker $USER
+newgrp docker
 
