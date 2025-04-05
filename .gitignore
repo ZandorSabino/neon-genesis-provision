@@ -16,3 +16,6 @@
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+# Vagrant control folder
+.vagrant
