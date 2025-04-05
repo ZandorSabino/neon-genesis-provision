@@ -1,0 +1,85 @@
+```
+sudo dnf install -y git
+git clone https://github.com/seu-usuario/fedora-setup.git
+cd fedora-setup
+sudo ./install.sh
+```
+
+> Guia de ferramentas, incluir
+
+# ✅ Pós-instalação do Fedora Workstation
+
+## 🔹 1️⃣ Utilitários Essenciais
+- [ ] `vim`
+- [ ] `curl`
+- [ ] `traceroute`
+- [ ] `atop`
+- [ ] `btop`
+- [ ] `bottom (btm)`
+- [ ] `exa` (ou `eza`, versão mais recente)
+- [ ] `bat` (batcat)
+- [ ] `fd` (find melhorado)
+- [ ] `ripgrep (rg)`
+- [ ] `zoxide`
+- [ ] `delta` (melhor `git diff`)
+- [ ] `onefetch`
+
+## 🔹 2️⃣ Terminal & Shell
+- [ ] `Alacritty`
+- [ ] `Zellij`
+- [ ] `tmux`
+- [ ] `zsh`
+- [ ] `ohmyzsh`
+- [ ] `mprocs`
+- [ ] `procs`
+
+## 🔹 3️⃣ Desenvolvimento
+### 🟢 Version Managers:
+- [ ] `pyenv` (Python)
+- [ ] `Volta` (Node.js)
+- [ ] `Rustup` (Rust)
+
+### 🟢 Gerenciadores de Pacotes:
+- [ ] `Poetry` (Python)
+- [ ] `UV` (Python)
+- [ ] `Bun` (Node.js)
+- [ ] `Yarn`
+- [ ] `NPM`
+- [ ] `PNPM`
+
+### 🟢 Linguagens:
+- [ ] `Python`
+- [ ] `Rust`
+- [ ] `GoLang`
+
+### 🟢 Git & Ferramentas Git:
+- [ ] `git`
+- [ ] `delta` (melhor diff para git)
+- [ ] `grex` (regex generator)
+- [ ] `Tokei` (contagem de linhas de código)
+
+## 🔹 4️⃣ DevOps e Cloud
+- [ ] `Docker`
+- [ ] `Docker Compose`
+- [ ] `kubectl`
+- [ ] `minikube`
+- [ ] `kmon` (monitoramento do kernel)
+- [ ] `bore` (tunneling)
+- [ ] `bandwhich` (monitoramento de rede)
+
+## 🔹 5️⃣ Browsers & Apps
+- [ ] `Brave`
+- [ ] `Qbittorrent`
+- [ ] `Stremio`
+- [ ] `Spotify`
+- [ ] `Discord`
+- [ ] `Slack`
+- [ ] `Google Drive`
+- [ ] `DBeaver`
+- [ ] `SQLite`
+- [ ] `Timeshift` (backup do sistema)
+
+## 🔹 6️⃣ Ferramentas HTTP
+- [ ] `xh` (alternativa ao `httpie`)
+- [ ] `httpie`
+- [ ] `gping` (ping visual)

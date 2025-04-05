@@ -1,0 +1,18 @@
+
+# Ignore temporary files
+*.tmp
+*.bak
+*.swp
+*.swo
+*.~*
+
+# Ignore logs
+*.log
+
+# Ignore compiled binaries
+*.out
+*.o
+
+# Ignore system files
+.DS_Store
+Thumbs.db
