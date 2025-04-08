@@ -1,3 +1,8 @@
+# PLUGINS
+
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting docker kubectl docker-compose)
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+
 # PYENV
 
 export PATH="$HOME/.pyenv/bin:$PATH"
@@ -26,3 +31,23 @@ eval "$(uvx --generate-shell-completion zsh)"
 
 # Print All Collors
 alias colors='for x in {0..8}; do for i in {30..37}; do for a in {40..47}; do echo -ne "\e[$x;$i;$a""m\\\e[$x;$i;$a""m\e[0;37;40m "; done; echo; done; done; echo ""'
+
+# Change Theme
+# starship   # ativa o prompt do Starship
+# omz        # volta pro tema do Oh My Zsh
+
+# Alternância entre Starship e Oh My Zsh
+if [[ "$USE_STARSHIP" == "1" ]]; then
+    eval "$(starship init zsh)"
+fi
+
+# Funções para alternar facilmente
+function starship() {
+    export USE_STARSHIP=1
+    source ~/.zshrc
+}
+
+function omz() {
+    export USE_STARSHIP=0
+    source ~/.zshrc
+}

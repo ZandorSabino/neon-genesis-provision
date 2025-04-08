@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sudo setenforce 0
 set -o pipefail  # Propaga erros em pipes
 set -e           # Interrompe em erros críticos
 
@@ -60,21 +60,72 @@ etapa_sistema() {
 
 # Atualização do sistema (CRÍTICA)
 system_update() {
-    log "📦 Intalando repositórios de terceiros..."
-    log "🔹 Instalando RPM Fusion..."
-    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm || error_critical "Falha ao atualizar pacotes."
-    log "🔹 Instalando repositório Terra..."
-    sudo dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release || error_critical "Falha ao atualizar pacotes."
-    log "🔹 Instalando repositório Flathub..."
-    sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo || error_critical "Falha ao atualizar pacotes."
-    log "✅ Atualização concluída!"
-    log "🛠 Configura DNF"
-    echo -e "\nmax_parallel_downloads=10\nfastestmirror=true" | sudo tee -a /etc/dnf/dnf.conf > /dev/null
-    log "✅ DNF configurado!"
-    log "🔹 Atualizando sistema..."
-    sudo dnf update -y --refresh || error_critical "Falha ao atualizar o sistema."
-    sudo dnf upgrade -y --refresh || error_critical "Falha ao atualizar pacotes."
-    log "✅ Atualização concluída!"
+    
+    log "🔹 Abilitando downloads paralelos para dnf"
+    sudo echo -e "\nmax_parallel_downloads=10\nfastestmirror=true" | sudo tee -a /etc/dnf/dnf.conf > /dev/null
+    log "✅ Downloads paralelos habilitados!"
+    
+    log "🔹 Abilitando repositório RPM Fusion free"
+    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    log "✅ Repositório RPM Fusion free habilitado!"
+    
+    log "🔹 Abilitando repositório RPM Fusion non-free"
+    sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    log "✅ Repositório RPM Fusion non-free habilitado!"
+    
+    log "🔹 Instala flatpak e Habilita repo Flatpak"
+    sudo dnf install -y flatpak
+    sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    log "✅ Repositório flatpak habilitado!"
+    
+    log "🔹 Habilitando repositório Docker"
+    sudo dnf config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
+    log "✅ Repositório Docker habilitado!"
+    
+    log "🔹 Habilitando repositório Brave"
+    sudo dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+    log "✅ Repositório Brave habilitado!"
+    
+    log "🔹 Instalando Google Chrome..."
+    sudo dnf install -y https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm || error_partial "Falha ao instalar Google Chrome."
+    log "✅🔹 OK: Google Chrome"
+
+    log "🔹 Instalando fontes Microsoft TrueType..."
+    sudo dnf install -y https://downloads.sourceforge.net/project/mscorefonts2/rpms/msttcore-fonts-installer-2.6-1.noarch.rpm || error_partial "Falha ao instalar fontes Microsoft TrueType."
+    log "✅ OK: Fontes Microsoft TrueType"
+
+    log "🔹 Instalando TeamViewer..."
+    sudo dnf install -y https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm || error_partial "Falha ao instalar TeamViewer."
+    log "✅ OK: TeamViewer"
+
+    log "🔹 Instalando Minikube..."
+    sudo dnf install -y https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm || error_partial "Falha ao instalar Minikube."
+    log "✅ OK: Minikube"
+
+    log "🔹 Instalando Slack..."
+    sudo dnf install -y https://slack.com/downloads/instructions/linux?ddl=1&build=rpm || error_partial "Falha ao instalar Slack."
+    log "✅ OK: Slack"
+
+    log "🔹 Instalando DBeaver..."
+    sudo dnf install -y https://dbeaver.io/files/dbeaver-ce-latest-stable.x86_64.rpm && log "✅ DBeaver instalado!" || error_partial "Falha ao instalar DBeaver."
+    log "✅ OK: DBeaver"
+
+
+    # log "📦 Intalando repositórios de terceiros..."
+    # log "🔹 Instalando RPM Fusion..."
+    # sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm || error_critical "Falha ao atualizar pacotes."
+    # log "🔹 Instalando repositório Terra..."
+    # sudo dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release || error_critical "Falha ao atualizar pacotes."
+    # log "🔹 Instalando repositório Flathub..."
+    # sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo || error_critical "Falha ao atualizar pacotes."
+    # log "✅ Atualização concluída!"
+    # log "🛠 Configura DNF"
+    # echo -e "\nmax_parallel_downloads=10\nfastestmirror=true" | sudo tee -a /etc/dnf/dnf.conf > /dev/null
+    # log "✅ DNF configurado!"
+    # log "🔹 Atualizando sistema..."
+    # sudo dnf update -y --refresh || error_critical "Falha ao atualizar o sistema."
+    # sudo dnf upgrade -y --refresh || error_critical "Falha ao atualizar pacotes."
+    # log "✅ Atualização concluída!"
 }
 
 # Instalar pacotes essenciais e pacotes que não precisão de configuração prévia (INDEPENDENTE)
